@@ -51,7 +51,7 @@ public class BlabController {
 		logger.info("Entering showFeed");
 
 		String username = (String) httpRequest.getSession().getAttribute("username");
-		// Ensure user is logged in
+		// Ensure user is logged in testtt
 		if (username == null) {
 			logger.info("User is not Logged In - redirecting...");
 			return Utils.redirect("login?target=profile");
@@ -157,7 +157,7 @@ public class BlabController {
 
 		int cnt, len;
 		try {
-			// Convert input to integers
+			// Convert input to integer
 			cnt = Integer.parseInt(count);
 			len = Integer.parseInt(length);
 		} catch (NumberFormatException e) {
