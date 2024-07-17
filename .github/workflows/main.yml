@@ -82,8 +82,9 @@ jobs:
           source_base_path_1: "com/:test/src/main/java/com/"
           source_base_path_2: "WEB-INF:test/src/main/webapp/WEB-INF"
           language: java
-          prComment: true
           cwe: '89,117'
+          createPR: true
           DEBUG: true
-          fixType: batch
+          fixType: single
           files: all
+          prComment: true
