@@ -157,7 +157,7 @@ public class BlabController {
 
 		int cnt, len;
 		try {
-			// Convert input to integer
+			// Convert input to integerr
 			cnt = Integer.parseInt(count);
 			len = Integer.parseInt(length);
 		} catch (NumberFormatException e) {
