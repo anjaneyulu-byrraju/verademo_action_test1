@@ -51,7 +51,7 @@ public class BlabController {
 		logger.info("Entering showFeed");
 
 		String username = (String) httpRequest.getSession().getAttribute("username");
-		// Ensure user is logged in test
+		// Ensure user is logged in testtt
 		if (username == null) {
 			logger.info("User is not Logged In - redirecting...");
 			return Utils.redirect("login?target=profile");
