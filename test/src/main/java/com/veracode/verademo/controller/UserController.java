@@ -85,7 +85,7 @@ public class UserController {
 			if (target != null && !target.isEmpty() && !target.equals("null")) {
 				return "redirect:" + target;
 			} else {
-				// default to user's feed
+				// default to user's feed test
 				return Utils.redirect("feed");
 			}
 		}
