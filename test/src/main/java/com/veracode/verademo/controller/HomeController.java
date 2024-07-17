@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String renderGet(Model model, HttpServletRequest request, HttpServletResponse response) {
-		// Check if user is already logged in
+		// Check if user is already logged in test
 		if (Utils.getSessionUserName(request, response) != null) {
 			// Redirect to user's feed
 			return Utils.redirect("feed");

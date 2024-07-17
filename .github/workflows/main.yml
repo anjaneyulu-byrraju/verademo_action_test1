@@ -88,4 +88,3 @@ jobs:
           fixType: single
           files: all
           prComment: true
-          
