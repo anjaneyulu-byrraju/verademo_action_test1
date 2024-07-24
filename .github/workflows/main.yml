@@ -85,4 +85,4 @@ jobs:
           cwe: '89,117'
           DEBUG: true
           fixType: single
-          files: changed
+          files: all
