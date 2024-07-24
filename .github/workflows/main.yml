@@ -86,6 +86,6 @@ jobs:
           cwe: '89,117'
           DEBUG: true
           fixType: batch
-          files: changed
+          files: all
           createPR: true
           
