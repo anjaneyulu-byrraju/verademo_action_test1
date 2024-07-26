@@ -338,7 +338,7 @@ public class ResetController {
 				line = br.readLine();
 			}
 
-			// Break content by delimitere
+			// Break content by delimitereed
 			lines = sb.toString().split(delimiter);
 		} catch (IOException ex) {
 			logger.error(ex);
