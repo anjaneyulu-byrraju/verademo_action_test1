@@ -24,13 +24,13 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
     - name: Build with Maven
       run: |
-            cd test
+            cd app
             mvn clean package
 
     - uses: actions/upload-artifact@v4
       with:
         name: verademo.war
-        path: test/target/verademo.war
+        path: app/target/verademo.war
         
   pipeline_scan:
       needs: build
@@ -74,17 +74,15 @@ jobs:
           
       - name: Create fixes from static findings
         id: convert
-        uses: Veracode/veracode-fix@main
+        uses: veracode/veracode-fix@v1.0.0
         with:
           inputFile: results.json
           vid: ${{ secrets.VID }}
           vkey: ${{ secrets.VKEY }}
-          source_base_path_1: "com/:test/src/main/java/com/"
-          source_base_path_2: "WEB-INF:test/src/main/webapp/WEB-INF"
+          source_base_path_1: "com/:app/src/main/java/com/"
+          source_base_path_2: "WEB-INF:app/src/main/webapp/WEB-INF"
           language: java
           prComment: true
-          cwe: '89,331'
           DEBUG: true
-          fixType: batch
+          fixType: single
           files: changed
-          createPR: true
