@@ -85,4 +85,4 @@ jobs:
           prComment: true
           DEBUG: true
           fixType: single
-          files: changed
+          files: all
