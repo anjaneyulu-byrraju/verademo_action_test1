@@ -8,6 +8,8 @@ import java.sql.Statement;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import java.net.URLEncoder;
+import java.util.*;
 
 public class RemoveAccountCommand implements BlabberCommand {
 	private static final Logger logger = LogManager.getLogger("VeraDemo:RemoveAccountCommand");
@@ -26,7 +28,7 @@ public class RemoveAccountCommand implements BlabberCommand {
 	 */
 	@Override
 	public void execute(String blabberUsername) {
-		String sqlQuery = "DELETE FROM listeners WHERE blabber=? OR listener=?;";
+		String sqlQuery = URLEncoder.encode("DELETE FROM listeners WHERE blabber=? OR listener=?;".toString());
 		logger.info(sqlQuery);
 		PreparedStatement action;
 		try {
@@ -43,14 +45,21 @@ public class RemoveAccountCommand implements BlabberCommand {
 			result.next();
 
 			/* START EXAMPLE VULNERABILITY */
-			String event = "Removed account for blabber " + result.getString(1);
+			Set<String> whitelistResultGetstring1 = new HashSet<>(Arrays.asList("item1", "item2", "item3"));
+			if (!result.getString(1).matches("\\w+(\\s*\\.\\s*\\w+)*") && !whitelistResultGetstring1.contains(result.getString(1)))
+			    throw new IllegalArgumentException();
+
+			String event = "Removed account for blabber " + URLEncoder.encode(result.getString(1).toString());
 			sqlQuery = "INSERT INTO users_history (blabber, event) VALUES ('" + blabberUsername + "', '" + event + "')";
 			logger.info(sqlQuery);
 			sqlStatement.execute(sqlQuery);
 
+
+
 			sqlQuery = "DELETE FROM users WHERE username = '" + blabberUsername + "'";
 			logger.info(sqlQuery);
-			sqlStatement.execute(sqlQuery);
+			PreparedStatement sqlStatement2 = conn.prepareStatement(sqlQuery);
+			sqlStatement2.execute();
 			/* END EXAMPLE VULNERABILITY */
 
 		} catch (SQLException e) {
