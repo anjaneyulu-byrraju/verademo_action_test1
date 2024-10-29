@@ -28,6 +28,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.apache.commons.lang3.StringUtils;
+import org.owasp.encoder.Encode;
+import org.apache.commons.text.StringEscapeUtils;
 
 @Controller
 @Scope("request")
@@ -57,7 +60,7 @@ public class BlabController {
 			return Utils.redirect("login?target=profile");
 		}
 
-		logger.info("User is Logged In - continuing... UA=" + httpRequest.getHeader("User-Agent") + " U=" + username);
+		logger.info("User is Logged In - continuing... UA=" + StringUtils.normalizeSpace(httpRequest.getHeader("User-Agent")) + " U=" + username);
 
 		Connection connect = null;
 		PreparedStatement blabsByMe = null;
@@ -193,7 +196,7 @@ public class BlabController {
 			logger.error(ex);
 		}
 
-		return ret.toString();
+		return Encode.forHtml(ret.toString());
 	}
 
 	@RequestMapping(value = "/feed", method = RequestMethod.POST)
@@ -210,7 +213,7 @@ public class BlabController {
 			logger.info("User is not Logged In - redirecting...");
 			return Utils.redirect("login?target=profile");
 		}
-		logger.info("User is Logged In - continuing... UA=" + httpRequest.getHeader("User-Agent") + " U=" + username);
+		logger.info("User is Logged In - continuing... UA=" + StringEscapeUtils.escapeJava(httpRequest.getHeader("User-Agent")) + " U=" + username);
 
 		Connection connect = null;
 		PreparedStatement addBlab = null;
@@ -275,7 +278,7 @@ public class BlabController {
 			return Utils.redirect("login?target=profile");
 		}
 
-		logger.info("User is Logged In - continuing... UA=" + httpRequest.getHeader("User-Agent") + " U=" + username);
+		logger.info("User is Logged In - continuing... UA=" + httpRequest.getHeader(StringUtils.normalizeSpace("User-Agent")) + " U=" + username);
 
 		Connection connect = null;
 		PreparedStatement blabDetails = null;
@@ -370,7 +373,7 @@ public class BlabController {
 			return Utils.redirect("login?target=feed");
 		}
 
-		logger.info("User is Logged In - continuing... UA=" + httpRequest.getHeader("User-Agent") + " U=" + username);
+		logger.info("User is Logged In - continuing... UA=" + StringEscapeUtils.escapeJava(httpRequest.getHeader("User-Agent")) + " U=" + username);
 		Connection connect = null;
 		PreparedStatement addComment = null;
 		String addCommentSql = "INSERT INTO comments (blabid, blabber, content, timestamp) values (?, ?, ?, ?);";
@@ -441,7 +444,7 @@ public class BlabController {
 			return Utils.redirect("login?target=blabbers");
 		}
 
-		logger.info("User is Logged In - continuing... UA=" + httpRequest.getHeader("User-Agent") + " U=" + username);
+		logger.info("User is Logged In - continuing... UA=" + StringEscapeUtils.escapeJava(httpRequest.getHeader("User-Agent")) + " U=" + username);
 
 		Connection connect = null;
 		PreparedStatement blabberQuery = null;
@@ -460,7 +463,7 @@ public class BlabController {
 			connect = DriverManager.getConnection(Constants.create().getJdbcConnectionString());
 
 			// Find the Blabbers
-			logger.info(blabbersSql);
+			logger.info(StringUtils.normalizeSpace(blabbersSql));
 			blabberQuery = connect.prepareStatement(blabbersSql);
 			blabberQuery.setString(1, username);
 			blabberQuery.setString(2, username);
@@ -520,15 +523,15 @@ public class BlabController {
 			return Utils.redirect("login?target=blabbers");
 		}
 
-		logger.info("User is Logged In - continuing... UA=" + httpRequest.getHeader("User-Agent") + " U=" + username);
+		logger.info("User is Logged In - continuing... UA=" + StringEscapeUtils.escapeJava(httpRequest.getHeader("User-Agent")) + " U=" + username);
 
 		if (command == null || command.isEmpty()) {
 			logger.info("Empty command provided...");
 			return nextView = Utils.redirect("login?target=blabbers");
 		}
 
-		logger.info("blabberUsername = " + blabberUsername);
-		logger.info("command = " + command);
+		logger.info("blabberUsername = " + StringUtils.normalizeSpace(blabberUsername));
+		logger.info("command = " + StringUtils.normalizeSpace(command));
 
 		Connection connect = null;
 		PreparedStatement action = null;
