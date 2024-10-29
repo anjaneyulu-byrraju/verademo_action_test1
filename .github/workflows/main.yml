@@ -84,7 +84,7 @@ jobs:
           language: java
           prComment: true
           DEBUG: true
-          fixType: single
+          fixType: batch
           files: all
-          cwe: '502,601,327'
+          createPR: true
           
