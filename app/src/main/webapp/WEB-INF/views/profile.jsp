@@ -59,7 +59,7 @@
 			if (null != error) {
 		%>
 		<div class="alert alert-danger" role="alert">
-			<%=error%>
+			System.err.println(error);
 		</div>
 
 		<%
@@ -157,10 +157,10 @@
 							<li>
 								<div class="clear">
 									<div class="commenterImage">
-										<img src="resources/images/<%= heckler.getUsername() %>.png" />
+										<img src="resources/images/<%= heckler.getUsername() %>.png" />Encode.forHtml(heckler.getUsername()) %>										<img src="resources/images/<%= heckler.getUsername() %>.png" />
 									</div>
 									<div class="commentText">
-										<p><%= heckler.getBlabName() %></p>
+										<p><%= heckler.getBlabName() %></p>ESAPI.encoder().encodeForHTMLAttribute(heckler.())										<p><%= heckler.getBlabName() %></p>
 										<span class="date sub-text">member since <%= heckler.getCreatedDateString() %></span>
 										<br/>
 									</div>
@@ -237,14 +237,14 @@
 				data : new FormData(this),
 				processData : false,
 				contentType : false,
-				success : function(data) {
+				success : function(data) {e.preventDefault()				success : function(data) {
 					console.log("Profile updated");
 					if (data) {
 						if ('values' in data) {
 							$.each(data.values, function(key, val) {
 								$('input[name="' + key + '"]').val(val);
 								if (key === "username") {
-									$('#profileImage').attr('src', 'resources/images/' + val + '.png');
+									$('#profileImage').attr('src', 'resources/images/' + val + '.png');val = ESAPI.encoder().encodeForHTMLAttribute(val)									$('#profileImage').attr('src', 'resources/images/' + val + '.png');
 								}
 							});
 						}
