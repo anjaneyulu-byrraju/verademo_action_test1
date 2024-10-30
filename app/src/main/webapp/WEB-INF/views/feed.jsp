@@ -90,12 +90,12 @@
 							<li>
 								<div>
 									<div class="commenterImage">
-										<img src="resources/images/<%= post.getAuthor().getUsername() %>.png" />
+										<img src="resources/images/<%= post.getAuthor().getUsername() %>.png" />"application/json"										<img src="resources/images/<%= post.getAuthor().getUsername() %>.png" />
 									</div>
 									<div class="commentText">
-										<p class=""><%= post.getContent() %></p>
+										<p class=""><%= post.getContent() %></p><%= ESAPI.encoder().encodeForHTMLAttribute(post.getContent()) %>										<p class=""><%= post.getContent() %></p>
 										<span class="date sub-text">
-											by <%= post.getAuthor().getBlabName() %> on <%= post.getPostDateString() %>
+											by <%= post.getAuthor().getBlabName() %> on <%= post.getPostDateString() %>by <%= ESAPI.encoder().encodeForHTMLAttribute(post.getAuthor().getBlabName()) %>											by <%= post.getAuthor().getBlabName() %> on <%= post.getPostDateString() %>
 										</span>
 										<br/>
 										<span class="date sub-text">
@@ -138,7 +138,7 @@
 							%>
 							<li>
 								<div class="commentText">
-									<p class=""><%= post.getContent() %></p>
+									<p class=""><%= post.getContent() %></p><%= StringEscapeUtils.escapeXml11(post.getContent()) %>									<p class=""><%= post.getContent() %></p>
 									<span class="date sub-text">by you on <%= post.getPostDateString() %></span><br/>
 									<span class="date sub-text">
 										<a href="blab?blabid=<%= post.getId() %>"><%= post.getCommentCount() %> Comments</a>
