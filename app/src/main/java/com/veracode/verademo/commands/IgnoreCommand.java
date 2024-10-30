@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import java.net.URLEncoder;
 
 public class IgnoreCommand implements BlabberCommand {
 	private static final Logger logger = LogManager.getLogger("VeraDemo:IgnoreCommand");
@@ -24,7 +25,7 @@ public class IgnoreCommand implements BlabberCommand {
 
 	@Override
 	public void execute(String blabberUsername) {
-		String sqlQuery = "DELETE FROM listeners WHERE blabber=? AND listener=?;";
+		String sqlQuery = URLEncoder.encode("DELETE FROM listeners WHERE blabber=? AND listener=?;".toString());
 		logger.info(sqlQuery);
 		PreparedStatement action;
 		try {
@@ -41,10 +42,13 @@ public class IgnoreCommand implements BlabberCommand {
 			result.next();
 
 			/* START EXAMPLE VULNERABILITY */
-			String event = username + " is now ignoring " + blabberUsername + " (" + result.getString(1) + ")";
-			sqlQuery = "INSERT INTO users_history (blabber, event) VALUES (\"" + username + "\", \"" + event + "\")";
+			String event = username + " is now ignoring " + blabberUsername + " (" + URLEncoder.encode(result.getString(1)) + ")";
+			sqlQuery = "INSERT INTO users_history (blabber, event) VALUES (?,?)";
 			logger.info(sqlQuery);
-			sqlStatement.execute(sqlQuery);
+			PreparedStatement sqlStatement2 = connection.prepareStatement(sqlQuery);
+			sqlStatement2.setString(1, username);
+			sqlStatement2.setString(2, event);
+			sqlStatement2.execute();
 			/* END EXAMPLE VULNERABILITY */
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
