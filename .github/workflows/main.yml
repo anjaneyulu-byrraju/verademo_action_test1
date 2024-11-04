@@ -84,6 +84,6 @@ jobs:
           language: java
           prComment: true
           DEBUG: true
-          fixType: batch
-          files: changed
+          fixType: single
+          files: all
           
