@@ -85,5 +85,5 @@ jobs:
           createPR: true
           DEBUG: true
           fixType: single
-          files: all
+          files: changed
           
