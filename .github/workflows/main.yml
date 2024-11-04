@@ -83,6 +83,7 @@ jobs:
           source_base_path_2: "WEB-INF:app/src/main/webapp/WEB-INF"
           language: java
           createPR: true
+          prComment: true
           DEBUG: true
           fixType: batch
           files: all
