@@ -52,6 +52,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.apache.commons.text.StringEscapeUtils;
+import java.net.URLEncoder;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author johnadmin
@@ -112,7 +115,7 @@ public class UserController {
 			target = "";
 		}
 
-		logger.info("Entering showLogin with username " + username + " and target " + target);
+		logger.info("Entering showLogin with username " + StringEscapeUtils.escapeJava(username) + " and target " + target);
 
 		model.addAttribute("username", username);
 		model.addAttribute("target", target);
@@ -225,14 +228,14 @@ public class UserController {
 		}
 
 		// Redirect to the appropriate place based on login actions above
-		logger.info("Redirecting to view: " + nextView);
+		logger.info("Redirecting to view: " + StringUtils.normalizeSpace(nextView));
 		return nextView;
 	}
 
 	@RequestMapping(value = "/password-hint", method = RequestMethod.GET)
 	@ResponseBody
 	public String showPasswordHint(String username) {
-		logger.info("Entering password-hint with username: " + username);
+		logger.info("Entering password-hint with username: " + StringEscapeUtils.escapeJava(username));
 
 		if (username == null || username.isEmpty()) {
 			return "No username provided, please type in your username first";
@@ -372,7 +375,7 @@ public class UserController {
 
 			sqlStatement = connect.createStatement();
 			sqlStatement.execute(query.toString());
-			logger.info(query.toString());
+			logger.info(URLEncoder.encode(query.toString()));
 			/* END EXAMPLE VULNERABILITY */
 
 			emailUser(username);
@@ -435,7 +438,7 @@ public class UserController {
 			HttpServletRequest httpRequest) {
 		logger.info("Entering showProfile");
 
-		String username = (String) httpRequest.getSession().getAttribute("username");
+		String username = (String) StringUtils.normalizeSpace(httpRequest.getSession().getAttribute("username"));
 		// Ensure user is logged in
 		if (username == null) {
 			logger.info("User is not Logged In - redirecting...");
@@ -485,7 +488,7 @@ public class UserController {
 
 			// Get the users information
 			String sql = "SELECT username, real_name, blab_name FROM users WHERE username = '" + username + "'";
-			logger.info(sql);
+			logger.info(StringEscapeUtils.escapeJava(sql));
 			myInfo = connect.prepareStatement(sql);
 			ResultSet myInfoResults = myInfo.executeQuery();
 			myInfoResults.next();
@@ -538,7 +541,7 @@ public class UserController {
 			return "{\"message\": \"<script>alert('Error - please login');</script>\"}";
 		}
 
-		logger.info("User is Logged In - continuing... UA=" + request.getHeader("User-Agent") + " U=" + sessionUsername);
+		logger.info("User is Logged In - continuing... UA=" + StringEscapeUtils.escapeJava(request.getHeader("User-Agent")) + " U=" + sessionUsername);
 
 		String oldUsername = sessionUsername;
 
@@ -624,7 +627,7 @@ public class UserController {
 				String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 				String path = imageDir + username + extension;
 
-				logger.info("Saving new profile image: " + path);
+				logger.info("Saving new profile image: " + StringUtils.normalizeSpace(path));
 
 				file.transferTo(new File(path)); // will delete any existing file first
 			} catch (IllegalStateException | IOException ex) {
@@ -654,11 +657,11 @@ public class UserController {
 			return Utils.redirect("login?target=profile");
 		}
 
-		logger.info("User is Logged In - continuing... UA=" + request.getHeader("User-Agent") + " U=" + sessionUsername);
+		logger.info("User is Logged In - continuing... UA=" + StringUtils.normalizeSpace(request.getHeader("User-Agent")) + " U=" + sessionUsername);
 
 		String path = context.getRealPath("/resources/images") + File.separator + imageName;
 
-		logger.info("Fetching profile image: " + path);
+		logger.info("Fetching profile image: " + StringUtils.normalizeSpace(path));
 
 		InputStream inputStream = null;
 		OutputStream outStream = null;
@@ -672,7 +675,7 @@ public class UserController {
 				// set to binary type if MIME mapping not found
 				mimeType = "application/octet-stream";
 			}
-			logger.info("MIME type: " + mimeType);
+			logger.info("MIME type: " + StringUtils.normalizeSpace(mimeType));
 
 			// Set content attributes for the response
 			response.setContentType(mimeType);
@@ -757,7 +760,7 @@ public class UserController {
 			}
 		}
 
-		logger.info("Username: " + username + " already exists. Try again.");
+		logger.info("Username: " + StringEscapeUtils.escapeJava(username) + " already exists. Try again.");
 		return true;
 	}
 
@@ -811,7 +814,7 @@ public class UserController {
 			if (oldImage != null) {
 				String extension = oldImage.substring(oldImage.lastIndexOf("."));
 
-				logger.info("Renaming profile image from " + oldImage + " to " + newUsername + extension);
+				logger.info("Renaming profile image from " + URLEncoder.encode(oldImage.toString()) + " to " + newUsername + extension);
 				String path = context.getRealPath("/resources/images") + File.separator;
 
 				File oldName = new File(path + oldImage);
