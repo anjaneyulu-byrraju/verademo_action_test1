@@ -86,4 +86,4 @@ jobs:
           fixType: batch
           files: all
           createPR: true
-          
+          cwe: '117'
