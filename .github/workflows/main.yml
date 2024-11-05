@@ -83,4 +83,4 @@ jobs:
           source_base_path_2: "WEB-INF:app/src/main/webapp/WEB-INF"
           language: java
           fixType: single
-          files: all
+          files: changed

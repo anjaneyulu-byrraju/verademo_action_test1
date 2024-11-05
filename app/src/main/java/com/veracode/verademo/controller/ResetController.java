@@ -355,4 +355,3 @@ public class ResetController {
 		return lines;
 	}
 }
-
