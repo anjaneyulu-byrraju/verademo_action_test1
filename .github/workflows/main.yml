@@ -84,4 +84,3 @@ jobs:
           language: java
           fixType: batch
           files: changed
-          
