@@ -86,5 +86,5 @@ jobs:
           DEBUG: true
           fixType: batch
           files: all
-          cwe: '117,80,404,159,209,597,89,611,331,113'
+          cwe: '117,80,404'
           
