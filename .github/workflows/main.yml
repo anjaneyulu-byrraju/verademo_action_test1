@@ -84,6 +84,6 @@ jobs:
           language: java
           DEBUG: true
           fixType: batch
-          files: changed
+          files: all
           createPR: true
           cwe: '117,80,404,159,209,597,89,611,331,113,327,502,601'
