@@ -8,6 +8,8 @@ import java.sql.Statement;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import java.net.URLEncoder;
+import org.apache.commons.lang3.StringUtils;
 
 public class RemoveAccountCommand implements BlabberCommand {
 	private static final Logger logger = LogManager.getLogger("VeraDemo:RemoveAccountCommand");
@@ -26,7 +28,7 @@ public class RemoveAccountCommand implements BlabberCommand {
 	 */
 	@Override
 	public void execute(String blabberUsername) {
-		String sqlQuery = "DELETE FROM listeners WHERE blabber=? OR listener=?;";
+		String sqlQuery = StringUtils.normalizeSpace("DELETE FROM listeners WHERE blabber=? OR listener=?;");
 		logger.info(sqlQuery);
 		PreparedStatement action;
 		try {
@@ -43,7 +45,7 @@ public class RemoveAccountCommand implements BlabberCommand {
 			result.next();
 
 			/* START EXAMPLE VULNERABILITY */
-			String event = "Removed account for blabber " + result.getString(1);
+			String event = "Removed account for blabber " + URLEncoder.encode(result.getString(1).toString());
 			sqlQuery = "INSERT INTO users_history (blabber, event) VALUES ('" + blabberUsername + "', '" + event + "')";
 			logger.info(sqlQuery);
 			sqlStatement.execute(sqlQuery);
