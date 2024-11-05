@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="55b1d3c2-b7ee-45ac-b567-60aa374a4da0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/main.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/main.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/veracode/verademo/controller/ResetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/veracode/verademo/controller/ResetController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,11 +17,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "git-widget-placeholder": "Test__003"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;git-widget-placeholder&quot;: &quot;Test__003&quot;
   }
-}]]></component>
+}</component>
   <component name="TaskManager">
     <servers />
   </component>
