@@ -80,6 +80,6 @@ jobs:
           vid: ${{ secrets.VID }}
           vkey: ${{ secrets.VKEY }}
           language: java
-          fixType: batch
+          fixType: single
           files: all
           
