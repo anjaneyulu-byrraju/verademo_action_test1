@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils;
 
 public class ListenCommand implements BlabberCommand {
 	private static final Logger logger = LogManager.getLogger("VeraDemo:ListenCommand");
@@ -24,7 +25,7 @@ public class ListenCommand implements BlabberCommand {
 
 	@Override
 	public void execute(String blabberUsername) {
-		String sqlQuery = "INSERT INTO listeners (blabber, listener, status) values (?, ?, 'Active');";
+		String sqlQuery = StringUtils.normalizeSpace("INSERT INTO listeners (blabber, listener, status) values (?, ?, 'Active');");
 		logger.info(sqlQuery);
 		PreparedStatement action;
 		try {
@@ -41,10 +42,11 @@ public class ListenCommand implements BlabberCommand {
 			result.next();
 
 			/* START EXAMPLE VULNERABILITY */
-			String event = username + " started listening to " + blabberUsername + " (" + result.getString(1) + ")";
+			String event = username + " started listening to " + blabberUsername + " (?)";
 			sqlQuery = "INSERT INTO users_history (blabber, event) VALUES (\"" + username + "\", \"" + event + "\")";
 			logger.info(sqlQuery);
 			sqlStatement.execute(sqlQuery);
+			sqlStatement.setString(1, username);
 			/* END EXAMPLE VULNERABILITY */
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
